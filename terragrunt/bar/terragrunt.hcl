@@ -2,7 +2,14 @@ terraform {
   source = "../shared"
 }
 
+dependency "foo" {
+  config_path = "../foo"
+  mock_outputs = {
+    content = "Mocked content from foo"
+  }
+}
+
 inputs = {
   output_dir = get_terragrunt_dir()
-  content = "Hello from bar, Terragrunt!"
+  content = "Foo content: ${dependency.foo.outputs.content}"
 }
