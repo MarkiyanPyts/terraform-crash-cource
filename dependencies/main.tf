@@ -13,3 +13,14 @@ resource "aws_instance" "web" {
 
     depends_on = [ aws_instance.db ]
 }
+
+data "aws_instance" "bd_search" {
+  filter {
+    name = "tag:Name"
+    values = [ "DB Server" ]
+  }
+}
+
+output "dbservers" {
+  value = data.aws_instance.bd_search.availability_zone
+}
